@@ -32,42 +32,72 @@
             <div class="text-test text-test-4" style="-webkit-text-stroke: 3px">O</div>
             <div class="text-test text-test-5" style="-webkit-text-stroke: 2px">A</div>
         </div>
+
+        <div class="test">SOHOA</div>
         <script>
-            console.log(document.querySelectorAll('.text-test'));
             document.querySelectorAll('.text-test')[0].style.fontWeight;
-
-            // for (let i = 0; i < document.querySelectorAll('.text-test').length; i++) {
-            //     document
-            //         .querySelectorAll('.text-test')
-            //         [i].setAttribute('style', `-webkit-text-stroke: ${document.querySelectorAll('.text-test').length - i}px`);
-            // }
-
-            // }
             function mappingAt(number, clientX) {
                 return (number / innerWidth) * clientX;
             }
 
-            window.addEventListener('mousemove', (e) => {
-                const clientX = e.clientX;
+            function makeSoho(selector) {
+                const target = document.querySelector(selector);
+                const maxValue = 0.1;
+                const letters = [];
+                for (let i = 0; i < target.textContent.length; i++) {
+                    letters.push(target.textContent.substr(i, 1));
+                }
+                target.innerHTML = '';
+                // 글자수에 따라서 필요한 단계가 다른데 그 단계를 나누는 비율 10/4 = 2.5 와 같은 비율이다.
+                const ratio = (maxValue * 100) / (letters.length - 1) / 100;
 
-                document.querySelector('.text-test-1').setAttribute('style', `-webkit-text-stroke: ${6 - mappingAt(4, clientX)}px`);
-                document.querySelector('.text-test-2').setAttribute('style', `-webkit-text-stroke: ${5 - mappingAt(2, clientX)}px`);
-                document.querySelector('.text-test-4').setAttribute('style', `-webkit-text-stroke: ${3 + mappingAt(2, clientX)}px`);
-                document.querySelector('.text-test-5').setAttribute('style', `-webkit-text-stroke: ${2 + mappingAt(4, clientX)}px`);
+                // text만 적혀있는 Elem을 선택해서 내부에 있는 글자들을 span으로 다 끊어준다. 순서대로 클래스를 줘서 하나하나 조정할 수 있도록 한다.
+                letters.forEach((letter, index) => {
+                    const letterEl = document.createElement('span');
+                    letterEl.classList.add(`text-${index}`);
+                    letterEl.textContent = letter;
+                    // 단위는 em으로 길이에 영향 받도록 만들기 최대 .1em, 최소 0em
+                    letterEl.style['-webkit-text-stroke'] = `${ratio * (letters.length - 1 - index)}em`;
+                    target.append(letterEl);
+                });
 
-                document.querySelectorAll('.symbol-1').forEach((target) => {
-                    target.setAttribute('style', `width: ${7 - mappingAt(4, clientX)}px`);
+                //
+                window.addEventListener('mousemove', (e) => {
+                    const clientX = e.clientX;
+                    const mouseRatio = Math.floor((clientX / innerWidth) * 1000) / 1000;
+                    const strokeValue = maxValue * mouseRatio;
+                    for (let i = 0; i < Math.floor(letters.length / 2); i++) {
+                        const text = document.querySelector(`.text-${i}`);
+                        // 서로 다른 비율로 줄어들도록 해야한다...
+
+                        // text.style['-webkit-text-stroke'] = `${maxValue - ratio * i - strokeValue}em`;
+                    }
                 });
-                document.querySelectorAll('.symbol-2').forEach((target) => {
-                    target.setAttribute('style', `width: ${6 - mappingAt(2, clientX)}px`);
-                });
-                document.querySelectorAll('.symbol-4').forEach((target) => {
-                    target.setAttribute('style', `width: ${4 + mappingAt(2, clientX)}px`);
-                });
-                document.querySelectorAll('.symbol-5').forEach((target) => {
-                    target.setAttribute('style', `width: ${2 + mappingAt(4, clientX)}px`);
-                });
-            });
+            }
+
+            makeSoho('.test');
+
+            // window.addEventListener('mousemove', (e) => {
+            //     const clientX = e.clientX;
+
+            //     document.querySelector('.text-test-1').setAttribute('style', `-webkit-text-stroke: ${6 - mappingAt(4, clientX)}px`);
+            //     document.querySelector('.text-test-2').setAttribute('style', `-webkit-text-stroke: ${5 - mappingAt(2, clientX)}px`);
+            //     document.querySelector('.text-test-4').setAttribute('style', `-webkit-text-stroke: ${3 + mappingAt(2, clientX)}px`);
+            //     document.querySelector('.text-test-5').setAttribute('style', `-webkit-text-stroke: ${2 + mappingAt(4, clientX)}px`);
+
+            //     document.querySelectorAll('.symbol-1').forEach((target) => {
+            //         target.setAttribute('style', `width: ${7 - mappingAt(4, clientX)}px`);
+            //     });
+            //     document.querySelectorAll('.symbol-2').forEach((target) => {
+            //         target.setAttribute('style', `width: ${6 - mappingAt(2, clientX)}px`);
+            //     });
+            //     document.querySelectorAll('.symbol-4').forEach((target) => {
+            //         target.setAttribute('style', `width: ${4 + mappingAt(2, clientX)}px`);
+            //     });
+            //     document.querySelectorAll('.symbol-5').forEach((target) => {
+            //         target.setAttribute('style', `width: ${2 + mappingAt(4, clientX)}px`);
+            //     });
+            // });
         </script>
     </body>
 </html>
