@@ -27,10 +27,10 @@
         </div>
         <div class="test-container">
             <div class="text-test text-test-1" style="-webkit-text-stroke: 6px">S</div>
-            <div class="text-test text-test-2" style="-webkit-text-stroke: 5px">O</div>
-            <div class="text-test text-test-3" style="-webkit-text-stroke: 4px">H</div>
-            <div class="text-test text-test-4" style="-webkit-text-stroke: 3px">O</div>
-            <div class="text-test text-test-5" style="-webkit-text-stroke: 2px">A</div>
+            <div class="text-test text-test-2" style="-webkit-text-stroke: 4px">O</div>
+            <div class="text-test text-test-3" style="-webkit-text-stroke: 3px">H</div>
+            <div class="text-test text-test-4" style="-webkit-text-stroke: 1px">O</div>
+            <div class="text-test text-test-5" style="-webkit-text-stroke: 0px">A</div>
         </div>
         <script>
             console.log(document.querySelectorAll('.text-test'));
@@ -50,10 +50,10 @@
             window.addEventListener('mousemove', (e) => {
                 const clientX = e.clientX;
 
-                document.querySelector('.text-test-1').setAttribute('style', `-webkit-text-stroke: ${6 - mappingAt(4, clientX)}px`);
-                document.querySelector('.text-test-2').setAttribute('style', `-webkit-text-stroke: ${5 - mappingAt(2, clientX)}px`);
-                document.querySelector('.text-test-4').setAttribute('style', `-webkit-text-stroke: ${3 + mappingAt(2, clientX)}px`);
-                document.querySelector('.text-test-5').setAttribute('style', `-webkit-text-stroke: ${2 + mappingAt(4, clientX)}px`);
+                document.querySelector('.text-test-1').setAttribute('style', `-webkit-text-stroke: ${6 - mappingAt(6, clientX)}px`);
+                document.querySelector('.text-test-2').setAttribute('style', `-webkit-text-stroke: ${4 - mappingAt(2, clientX)}px`);
+                document.querySelector('.text-test-4').setAttribute('style', `-webkit-text-stroke: ${1 + mappingAt(2, clientX)}px`);
+                document.querySelector('.text-test-5').setAttribute('style', `-webkit-text-stroke: ${0 + mappingAt(6, clientX)}px`);
 
                 document.querySelectorAll('.symbol-1').forEach((target) => {
                     target.setAttribute('style', `width: ${7 - mappingAt(4, clientX)}px`);
